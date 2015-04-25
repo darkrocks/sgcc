@@ -7,5 +7,6 @@ node_modules/
 
 /**/*.js.map
 src/client/**/*.js
-!/src/client/bower_components/**/*.js
 src/server/**/*.js
+src/typescript-references/**/*.js
+!/src/client/bower_components/**/*.js
