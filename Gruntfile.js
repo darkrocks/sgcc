@@ -16,7 +16,8 @@ module.exports = function(grunt) {
     },
     ts: {
       default : {
-        src: tsSrc
+        src: ["src/typescript-references/references.ts", tsSrc],
+        reference: "src/typescript-references/references.ts"
       }
     },
     tslint: {

@@ -3,6 +3,7 @@ artifacts
 
 # NodeJS modules
 node_modules/
+.tscache/
 
 /**/*.js.map
 src/client/**/*.js
