@@ -10,3 +10,4 @@
 /// <reference path="../lib/dt-express/express.d.ts" />
 /// <reference path="../lib/dt-jquery/jquery.d.ts" />
 /// <reference path="../lib/dt-node/node.d.ts" />
+/// <reference path="../lib/dt-lodash/lodash.d.ts" />
