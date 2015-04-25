@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     watch: {
       ts: {
         files: tsSrc,
-        tasks: ['ts', 'tslint:src']
+        tasks: ['tslint:src', 'ts']
       },
       less: {
         files: ['src/styles/**/*.less'],
