@@ -6,8 +6,12 @@ module Sgcc {
 
     angular.module('sgcc.app', [
         'ngRoute',
+        'angular-loading-bar',
         'sgcc.issues',
         'sgcc.navbar'
     ])
-        .config(routingConfig);
+        .config(routingConfig)
+        .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+            cfpLoadingBarProvider.includeSpinner = false;
+        }]);
 }

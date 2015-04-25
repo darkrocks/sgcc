@@ -27,7 +27,7 @@ module Sgcc.Issues {
         setRepositoriesDebounced = _.debounce(() => {
             this.setRepositories();
             this.$scope.$digest();
-        }, 1000);
+        }, 500);
 
         setRepositories() {
             if (!!this.$scope.repositoryOwner) {
