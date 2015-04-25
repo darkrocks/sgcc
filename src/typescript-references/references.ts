@@ -1,6 +1,7 @@
 //grunt-start
 /// <reference path="../client/app.ts" />
 /// <reference path="../client/issues/IssuesController.ts" />
+/// <reference path="../client/issues/issues.ts" />
 /// <reference path="../server/routes.ts" />
 /// <reference path="../server/server.ts" />
 //grunt-end

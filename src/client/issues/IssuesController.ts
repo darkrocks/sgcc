@@ -5,5 +5,10 @@ module Sgcc.Issues {
     'use strict';
 
     export class IssuesController {
+        static $inject = ['$scope'];
+
+        constructor(private $scope: any) {
+            this.$scope.test = 'issues';
+        }
     }
 }
