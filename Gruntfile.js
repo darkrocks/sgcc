@@ -1,7 +1,7 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
-  var tsSrc = ['**/*.ts', "!node_modules/**/*.ts", "!src/lib/**/*.ts"];
+  var tsSrc = ['**/*.ts', "!node_modules/**/*.ts", "!src/client/lib/**/*.ts"];
   // Project configuration.
   grunt.initConfig({
     watch: {
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         tasks: ['tslint:src', 'ts']
       },
       less: {
-        files: ['src/styles/**/*.less'],
+        files: ['src/client/styles/**/*.less'],
         tasks: 'less:develop'
       }
     },
@@ -34,8 +34,8 @@ module.exports = function(grunt) {
           ieCompat: false,
           relativeUrls: true
         },
-        src: ['src/styles/app.less'],
-        dest: 'src/styles/app.css'
+        src: ['src/client/styles/app.less'],
+        dest: 'src/client/styles/app.css'
       }
     }
   });
