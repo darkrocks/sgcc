@@ -6,35 +6,44 @@ module Sgcc.Issues {
 
     export interface IRepositorySelectorDirectiveScope extends ng.IScope{
         repositoryOwner: string;
-        selectedRepository: string;
-        repositories: string[];
-        onRepositoryOwnerChanged: () => void;
+        selectedRepository: Data.Repository;
+        repositories: Data.Repository [];
     }
 
     export class RepositorySelectorController {
-        static $inject = ['$scope'];
+        static $inject = ['$scope', '$q', 'sgccGithubDataService'];
 
-        constructor(private $scope: IRepositorySelectorDirectiveScope) {
-            this.initScope();
+        private noSelectedRepository: Data.Repository = new Data.Repository(0, '- Select a Repository -');
+
+        constructor(private $scope: IRepositorySelectorDirectiveScope,
+                    private $q: ng.IQService,
+                    private githubDataService: Data.GithubDataService) {
+            this.setRepositories();
             this.$scope.$watch(() => this.$scope.repositoryOwner, () => {
-                this.initScope();
+                this.setRepositoriesDebounced();
             });
-            this.$scope.onRepositoryOwnerChanged = () => {
-                var i = 1;
-            };
         }
 
-        initScope() {
+        setRepositoriesDebounced = _.debounce(() => {
+            this.setRepositories();
+            this.$scope.$digest();
+        }, 1000);
+
+        setRepositories() {
             if (!!this.$scope.repositoryOwner) {
-                this.$scope.repositories = ['one', 'two', 'three'];
+                this.githubDataService.getRepositiries(this.$scope.repositoryOwner)
+                    .then((repositories: Data.Repository[]) => {
+                        this.$scope.repositories = repositories;
+                        this.$scope.selectedRepository = this.$scope.repositories[0];
+                    });
             } else {
-                this.$scope.repositories = ['- Select a Repository -'];
+                this.$scope.repositories = [this.noSelectedRepository];
+                this.$scope.selectedRepository = this.noSelectedRepository;
             }
-            this.$scope.selectedRepository = this.$scope.repositories[0];
         }
     }
 
-    export function repositorySelectorDirective() {
+    export function repositorySelectorDirective($timeout: ng.ITimeoutService, $q: ng.IQService) {
         return {
             restrict: 'AEC',
             scope: {
@@ -43,11 +52,10 @@ module Sgcc.Issues {
             },
             templateUrl: '/app/issues/repositorySelector/repositorySelectorDirective.html',
             require: ['sgccRepositorySelector'],
-            link: (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs, ctrlArr) => {
-
+            link: (scope: IRepositorySelectorDirectiveScope, element: ng.IAugmentedJQuery, attrs, ctrlArr) => {
             },
             controller: 'sgccRepositorySelectorController'
         };
     }
-    repositorySelectorDirective.$inject = [];
+    repositorySelectorDirective.$inject = ['$timeout', '$q'];
 }

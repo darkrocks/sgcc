@@ -1,5 +1,8 @@
 //grunt-start
 /// <reference path="../client/app/app.ts" />
+/// <reference path="../client/app/data/GithubDataService.ts" />
+/// <reference path="../client/app/data/data.ts" />
+/// <reference path="../client/app/data/models/Repository.ts" />
 /// <reference path="../client/app/issues/IssuesController.ts" />
 /// <reference path="../client/app/issues/issues.ts" />
 /// <reference path="../client/app/issues/repositorySelector/repositorySelectorDirective.ts" />

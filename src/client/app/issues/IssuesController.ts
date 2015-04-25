@@ -8,7 +8,7 @@ module Sgcc.Issues {
         static $inject = ['$scope'];
 
         constructor(private $scope: any) {
-            this.$scope.repositoryOwner = 'test';
+            this.$scope.repositoryOwner = '';
             this.$scope.selectedRepository = '';
         }
     }
