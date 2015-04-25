@@ -1,9 +1,13 @@
 <form class="form-inline">
     <div class="form-group">
-        <input class="form-control" type="text" ng-value="repositoryOwner">
+        <input
+                class="form-control"
+                type="text"
+                ng-model="repositoryOwner"
+                ng-change="onRepositoryOwnerChanged()">
 
-        <select class="form-control">
-            <option value="">- Select a Repository -</option>
-        </select>
+        <select class="form-control"
+                ng-options="repository for repository in repositories"
+                ng-model="selectedRepository"></select>
     </div>
 </form>

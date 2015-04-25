@@ -9,6 +9,7 @@ module Sgcc.Issues {
 
         constructor(private $scope: any) {
             this.$scope.repositoryOwner = 'test';
+            this.$scope.selectedRepository = '';
         }
     }
 }
