@@ -2,6 +2,7 @@
 /// <reference path="../client/app/app.ts" />
 /// <reference path="../client/app/issues/IssuesController.ts" />
 /// <reference path="../client/app/issues/issues.ts" />
+/// <reference path="../client/app/routing.ts" />
 /// <reference path="../server/routes.ts" />
 /// <reference path="../server/server.ts" />
 //grunt-end
