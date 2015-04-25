@@ -4,5 +4,15 @@
 module Sgcc {
     'use strict';
 
-    var test: number = 777;
+    angular.module('sgcc.app', [
+        'ngRoute'
+    ])
+        .config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
+            $httpProvider.defaults.useXDomain = true;
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            });
+        }]);
+
 }
