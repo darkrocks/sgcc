@@ -2,6 +2,7 @@
 /// <reference path="../client/app/app.ts" />
 /// <reference path="../client/app/issues/IssuesController.ts" />
 /// <reference path="../client/app/issues/issues.ts" />
+/// <reference path="../client/app/issues/repositorySelector/repositorySelectorDirective.ts" />
 /// <reference path="../client/app/navbar/navbar.ts" />
 /// <reference path="../client/app/navbar/navbarDirective.ts" />
 /// <reference path="../client/app/routing.ts" />
