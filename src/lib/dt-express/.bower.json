@@ -1,0 +1,17 @@
+{
+  "name": "dt-express",
+  "dependencies": {
+    "dt-node": "latest"
+  },
+  "homepage": "https://github.com/dt-bower/dt-express",
+  "_release": "1868190ec2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1868190ec2c6792c2d6f43104749f7cf1b10e7ba"
+  },
+  "_source": "git://github.com/dt-bower/dt-express.git",
+  "_target": "*",
+  "_originalSource": "dt-express",
+  "_direct": true
+}

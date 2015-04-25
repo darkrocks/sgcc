@@ -1,0 +1,7 @@
+{
+  "name": "dt-express",
+  "version": "3.1.0",
+  "dependencies": {
+    "dt-node": "latest"
+  }
+}
