@@ -6,7 +6,8 @@ module Sgcc {
 
     angular.module('sgcc.app', [
         'ngRoute',
-        'sgcc.issues'
+        'sgcc.issues',
+        'sgcc.navbar'
     ])
         .config(routingConfig);
 }

@@ -5,5 +5,5 @@ module Sgcc.Issues {
     'use strict';
 
     angular.module('sgcc.issues', [])
-        .controller('IssuesController', IssuesController);
+        .controller('sgccIssuesController', IssuesController);
 }

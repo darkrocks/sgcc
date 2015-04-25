@@ -7,7 +7,7 @@ module Sgcc {
     export var routes = {
       issues: {
           templateUrl: '/app/issues/issues.html',
-          controller: 'IssuesController'
+          controller: 'sgccIssuesController'
       }
     };
 
