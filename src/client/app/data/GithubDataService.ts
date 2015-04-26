@@ -151,8 +151,8 @@ module Sgcc.Data {
                 })
                 .catch((data) => {
                     var errorMessage;
-                    if (data.data) {
-                        errorMessage = data.data.message;
+                    if (data.statusText) {
+                        errorMessage = data.statusText;
                     } else {
                         errorMessage = 'Unknown error';
                     }

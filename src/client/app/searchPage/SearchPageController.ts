@@ -33,10 +33,6 @@ module Sgcc.SearchPage {
                 this.updateUrl();
             });
 
-            $scope.$on('$destroy', function() {
-                onRouteExternalUpdateUnbind();
-            });
-
             $scope.onUserChange = () => {
                 this.$scope.currentPage = 1;
             };
@@ -44,6 +40,10 @@ module Sgcc.SearchPage {
             $scope.onSelectedRepositoryChange = () => {
                 this.$scope.currentPage = 1;
             };
+
+            $scope.$on('$destroy', function() {
+                onRouteExternalUpdateUnbind();
+            });
         }
 
         urlStateToScope(urlState: UrlState) {

@@ -17,11 +17,6 @@ module Sgcc {
     };
 
     export var routingConfig = ($httpProvider, $routeProvider, $locationProvider) => {
-        //$httpProvider.defaults.useXDomain = true;
-        //$locationProvider.html5Mode({
-        //    enabled: true,
-        //    requireBase: false
-        //});
         $routeProvider.when('/issue/:githubUser/:repo/:number', routes.issueDetailsPage);
         $routeProvider.otherwise(routes.searchPage);
     };
