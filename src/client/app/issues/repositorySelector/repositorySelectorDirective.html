@@ -1,13 +1,22 @@
-<form class="form-inline">
-    <div class="form-group">
-        <input
-                class="form-control"
-                type="text"
-                ng-model="repositoryOwner"
-                autofocus>
+<form >
+      <div class="form-group">
+          <label>Github user</label>
+          <input
+                  class="form-control"
+                  type="text"
+                  ng-model="githubUser"
+                  placeholder="Search Github user"
+                  autofocus>
+      </div>
 
+    <div class="form-group" ng-show="repositories.length">
+        <label>Repository</label>
         <select class="form-control"
                 ng-options="repository.name for repository in repositories"
                 ng-model="selectedRepository"></select>
+    </div>
+
+    <div class="form-group" ng-show="errorMessage">
+        <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
     </div>
 </form>

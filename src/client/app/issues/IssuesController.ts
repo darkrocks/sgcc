@@ -8,8 +8,8 @@ module Sgcc.Issues {
         static $inject = ['$scope'];
 
         constructor(private $scope: any) {
-            this.$scope.repositoryOwner = '';
-            this.$scope.selectedRepository = '';
+            this.$scope.githubUser = '';
+            this.$scope.selectedRepositoryName = '';
         }
     }
 }
