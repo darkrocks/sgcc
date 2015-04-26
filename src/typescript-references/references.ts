@@ -13,6 +13,7 @@
 /// <reference path="../client/app/searchPage/issuesGrid/issuesGridDirective.ts" />
 /// <reference path="../client/app/searchPage/repositorySelector/repositorySelectorDirective.ts" />
 /// <reference path="../client/app/searchPage/searchPage.ts" />
+/// <reference path="../client/app/searchPage/urlService.ts" />
 /// <reference path="../server/routes.ts" />
 /// <reference path="../server/server.ts" />
 //grunt-end

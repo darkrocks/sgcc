@@ -14,6 +14,7 @@ module Sgcc.SearchPage {
         pages: number[];
         currentPage: number;
         perPage: number
+        possiblePerPage: number[];
         onPageClicked: (pageNumber: number) => void;
         onPreviousClicked: () => void;
         onNextClicked: () => void;
@@ -21,33 +22,42 @@ module Sgcc.SearchPage {
 
     export class IssuesGridController {
         static $inject = ['$scope', '$q', 'sgccGithubDataService'];
+        private debounceConst: number = 500;
         private issuesLoadCanceller: ng.IDeferred<any> = this.$q.defer();
 
         constructor(private $scope: IIssuesGridDirectiveScope,
                     private $q: ng.IQService,
                     private githubDataService: Data.GithubDataService) {
-            this.$scope.perPage = 20;
-            this.$scope.currentPage = 1;
+            this.$scope.possiblePerPage = [5, 10, 20, 30, 40, 50];
+            this.setIssues();
 
+            this.$scope.$watch(() => this.$scope.githubUser, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
+                this.onGithubUserChanged();
+            });
 
-            this.$scope.$watch(() => this.$scope.githubUser, () => {
-                this.$scope.currentPage = 1;
-                this.$scope.selectedRepositoryName = null;
+            this.$scope.$watch(() => this.$scope.selectedRepositoryName, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
+                this.onSelectedRepositoryNameChanged();
+            });
+
+            this.$scope.$watch(() => this.$scope.currentPage, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
                 this.setIssuesDebounced();
             });
 
-            this.$scope.$watch(() => this.$scope.selectedRepositoryName, () => {
+            this.$scope.$watch(() => this.$scope.perPage, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
                 this.$scope.currentPage = 1;
                 this.setIssues();
-            });
-
-            this.$scope.$watch(() => this.$scope.currentPage, () => {
-                this.setIssuesDebounced();
-            });
-
-            this.$scope.$watch(() => this.$scope.perPage, () => {
-                this.$scope.currentPage = 1;
-                this.setIssuesDebounced();
             });
 
             this.$scope.onPageClicked = (pageNumber: number) => {
@@ -67,10 +77,23 @@ module Sgcc.SearchPage {
             };
         }
 
+        onGithubUserChanged = _.debounce(() => {
+            this.$scope.currentPage = 1;
+            this.$scope.selectedRepositoryName = null;
+            this.setIssues();
+            this.$scope.$digest();
+        }, this.debounceConst);
+
+        onSelectedRepositoryNameChanged = _.debounce(() => {
+            this.$scope.currentPage = 1;
+            this.setIssues();
+            this.$scope.$digest();
+        }, this.debounceConst);
+
         setIssuesDebounced = _.debounce(() => {
             this.setIssues();
             this.$scope.$digest();
-        }, 500);
+        }, this.debounceConst);
 
         setIssues() {
             // cancel previous request
@@ -111,7 +134,9 @@ module Sgcc.SearchPage {
             restrict: 'AEC',
             scope: {
                 githubUser: '=',
-                selectedRepositoryName: '='
+                selectedRepositoryName: '=',
+                currentPage: '=',
+                perPage: '='
             },
             templateUrl: '/app/searchPage/issuesGrid/issuesGridDirective.html',
             require: ['sgccIssuesGrid'],

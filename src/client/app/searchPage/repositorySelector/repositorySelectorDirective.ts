@@ -16,38 +16,50 @@ module Sgcc.SearchPage {
     export class RepositorySelectorController {
         static $inject = ['$scope', '$q', 'sgccGithubDataService'];
         private repositoriesLoadCanceller: ng.IDeferred<any> = this.$q.defer();
+        private debounceConst: number = 500;
 
         constructor(private $scope: IRepositorySelectorDirectiveScope,
                     private $q: ng.IQService,
                     private githubDataService: Data.GithubDataService) {
-
-            if (!this.$scope.selectedRepositoryName) {
-                this.$scope.selectedRepositoryName = selectRepositoryOption.name;
-            }
             this.updateScope();
 
-            this.$scope.$watch(() => this.$scope.githubUser, () => {
-                this.$scope.repositories = [];
-                this.$scope.selectedRepository = null;
-                this.$scope.selectedRepositoryName = null;
-                this.$scope.errorMessage = null;
-                this.setRepositoriesDebounced();
+            this.$scope.$watch(() => this.$scope.githubUser, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
+                this.onGithubUserChanged();
+            });
+
+            this.$scope.$watch(() => this.$scope.selectedRepositoryName, (newVal, oldVal) => {
+                if (newVal === oldVal) {
+                    return;
+                }
+                this.$scope.selectedRepository = _.find(this.$scope.repositories, (repo: Data.Repository) => {
+                    return (repo.name === this.$scope.selectedRepositoryName);
+                });
+
+                if (!this.$scope.selectedRepository) {
+                    this.$scope.selectedRepository = selectRepositoryOption;
+                }
             });
 
             this.$scope.onSelectedRepositoryChange = (repository: Data.Repository) => {
-                if (!!this.$scope.selectedRepository) {
+                if (!!this.$scope.selectedRepository && !(this.$scope.selectedRepository === selectRepositoryOption)) {
                     this.$scope.selectedRepositoryName = this.$scope.selectedRepository.name;
                 } else {
                     this.$scope.selectedRepositoryName = null;
                 }
             };
-
         }
 
-        setRepositoriesDebounced = _.debounce(() => {
+        onGithubUserChanged = _.debounce(() => {
+            this.$scope.repositories = [];
+            this.$scope.selectedRepository = null;
+            this.$scope.selectedRepositoryName = null;
+            this.$scope.errorMessage = null;
             this.updateScope();
             this.$scope.$digest();
-        }, 1000);
+        }, this.debounceConst);
 
         updateScope() {
             // cancel previous request

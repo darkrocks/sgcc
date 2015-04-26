@@ -7,7 +7,8 @@ module Sgcc {
     export var routes = {
       searchPage: {
           templateUrl: '/app/searchPage/searchPage.html',
-          controller: 'sgccSearchPageController'
+          controller: 'sgccSearchPageController',
+          reloadOnSearch: false
       }
     };
 
