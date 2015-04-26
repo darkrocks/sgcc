@@ -56,7 +56,7 @@ module Sgcc.SearchPage {
             };
 
             this.$scope.userChanged = () => {
-                this.$scope.repositories = [];
+                this.$scope.repositories = null;
                 this.$scope.selectedRepository = null;
                 this.$scope.selectedRepositoryName = null;
                 this.$scope.errorMessage = null;
@@ -89,12 +89,12 @@ module Sgcc.SearchPage {
                         this.$scope.errorMessage = null;
                     })
                     .catch((data: Data.IGetRepositiriesResponse) => {
-                        this.$scope.repositories = [];
+                        this.$scope.repositories = null;
                         this.$scope.selectedRepository = null;
                         this.$scope.errorMessage = data.errorMessage;
                     });
             } else {
-                this.$scope.repositories = [];
+                this.$scope.repositories = null;
                 this.$scope.selectedRepository = null;
                 this.$scope.errorMessage = null;
             }

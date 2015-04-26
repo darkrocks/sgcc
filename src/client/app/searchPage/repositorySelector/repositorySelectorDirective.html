@@ -10,7 +10,7 @@
                   autofocus>
       </div>
 
-    <div class="form-group" ng-show="repositories.length" ng-hide="!githubUser">
+    <div class="form-group" ng-show="!!repositories && repositories.length > 0 && !!githubUser">
         <label>Repository</label>
         <select class="form-control"
                 ng-options="repository.name for repository in repositories"
