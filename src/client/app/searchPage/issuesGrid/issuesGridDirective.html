@@ -1,5 +1,5 @@
 <div ng-hide="issues === null || issues.length === 0">
-    <table class="table">
+    <table class="table table-hover"">
         <caption><label>Issues</label></caption>
         <thead>
         <tr>
@@ -22,7 +22,7 @@
     </table>
     <div class="row">
         <div class="col-md-10">
-            <nav >
+            <nav ng-hide="!pages || pages.length === 0">
                 <ul class="pagination">
                     <li ng-hide="currentPage === 1">
                         <a ng-click="onPreviousClicked()" aria-label="Previous">
@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li ng-repeat="pageNumber in pages" ng-class="(pageNumber === currentPage) ? 'active': ''"><a ng-click="onPageClicked(pageNumber)">{{pageNumber}}</a></li>
-                    <li ng-hide="currentPage === pages.length">
+                    <li ng-hide="currentPage === pages.length || pages.length === 1">
                         <a ng-click="onNextClicked()" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
@@ -38,7 +38,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-md-2" style="margin-top: 16px;">
+        <div class="col-md-2" style="margin-top: 17px;">
             Issues per page:
             <input class="form-control" style="  width: 48px; display: inline;" type="text" ng-model="perPage">
         </div>
