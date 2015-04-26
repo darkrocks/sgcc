@@ -9,16 +9,20 @@ module Sgcc {
           templateUrl: '/app/searchPage/searchPage.html',
           controller: 'sgccSearchPageController',
           reloadOnSearch: false
-      }
+      },
+        issueDetailsPage: {
+            templateUrl: '/app/issueDetailsPage/issueDetailsPage.html',
+            controller: 'sgccIssueDetailsPageController'
+        }
     };
 
     export var routingConfig = ($httpProvider, $routeProvider, $locationProvider) => {
-        $httpProvider.defaults.useXDomain = true;
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });
-
+        //$httpProvider.defaults.useXDomain = true;
+        //$locationProvider.html5Mode({
+        //    enabled: true,
+        //    requireBase: false
+        //});
+        $routeProvider.when('/issue/:githubUser/:repo/:number', routes.issueDetailsPage);
         $routeProvider.otherwise(routes.searchPage);
     };
     routingConfig.$inject = ['$httpProvider', '$routeProvider', '$locationProvider'];

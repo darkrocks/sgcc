@@ -8,6 +8,7 @@ module Sgcc {
         'ngRoute',
         'angular-loading-bar',
         'sgcc.searchPage',
+        'sgcc.issueDetailsPage',
         'sgcc.navbar'
     ])
         .config(routingConfig)
