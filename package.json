@@ -10,5 +10,10 @@
     "grunt-ts": "^4.0.1",
     "grunt-tslint": "^2.0.0",
     "tslint": "^2.1.1"
+  },
+  "scripts": {
+    "postinstall": "grunt",
+    "prestart": "npm install",
+    "start": "node src/server/server.js"
   }
 }
