@@ -9,7 +9,6 @@ module Sgcc.SearchPage {
 
     export class SearchPageController {
         static $inject = ['$scope', 'sgccUrlService'];
-        private debounceConst: number = 500;
 
         constructor(private $scope: any, private urlService: UrlService) {
             this.urlStateToScope(this.urlService.getState());
@@ -19,7 +18,7 @@ module Sgcc.SearchPage {
             });
 
             $scope.$watch(() => this.$scope.githubUser, () => {
-                this.updateUrl();
+                this.updateUrlDebounced();
             });
 
             $scope.$watch(() => this.$scope.selectedRepositoryName, () => {
@@ -60,13 +59,18 @@ module Sgcc.SearchPage {
             }
         }
 
-        updateUrl = _.debounce(() => {
+        updateUrlDebounced = _.debounce(() => {
+                this.updateUrl();
+            }
+        , 500);
+
+        updateUrl() {
             this.urlService.updateUrl(
                 this.$scope.githubUser,
                 this.$scope.selectedRepositoryName,
                 this.$scope.currentPage,
                 this.$scope.perPage
             );
-        }, this.debounceConst);
+        }
     }
 }

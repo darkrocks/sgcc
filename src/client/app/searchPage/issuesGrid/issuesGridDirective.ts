@@ -43,14 +43,14 @@ module Sgcc.SearchPage {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.setIssuesDebounced();
+                this.setIssues();
             });
 
             this.$scope.$watch(() => this.$scope.currentPage, (newVal, oldVal) => {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.setIssuesDebounced();
+                this.setIssues();
             });
 
             this.$scope.$watch(() => this.$scope.perPage, (newVal, oldVal) => {
