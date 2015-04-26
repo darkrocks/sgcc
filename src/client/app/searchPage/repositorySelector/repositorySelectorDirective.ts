@@ -8,7 +8,10 @@ module Sgcc.SearchPage {
         githubUser: string;
         selectedRepositoryName: string;
         selectedRepository: Data.Repository;
-        onSelectedRepositoryChange: (repository: Data.Repository) => void;
+        onSelectedRepositoryChange: () => void;
+        selectedRepositoryChanged: (repository: Data.Repository) => void;
+        onUserChange: () => void;
+        userChanged: () => void;
         repositories: Data.Repository [];
         errorMessage: string;
     }
@@ -27,7 +30,7 @@ module Sgcc.SearchPage {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.onGithubUserChanged();
+                this.updateScope();
             });
 
             this.$scope.$watch(() => this.$scope.selectedRepositoryName, (newVal, oldVal) => {
@@ -43,25 +46,25 @@ module Sgcc.SearchPage {
                 }
             });
 
-            this.$scope.onSelectedRepositoryChange = (repository: Data.Repository) => {
+            this.$scope.selectedRepositoryChanged = (repository: Data.Repository) => {
                 if (!!this.$scope.selectedRepository && !(this.$scope.selectedRepository === selectRepositoryOption)) {
                     this.$scope.selectedRepositoryName = this.$scope.selectedRepository.name;
                 } else {
                     this.$scope.selectedRepositoryName = null;
                 }
+                this.$scope.onSelectedRepositoryChange();
+            };
+
+            this.$scope.userChanged = () => {
+                this.$scope.repositories = [];
+                this.$scope.selectedRepository = null;
+                this.$scope.selectedRepositoryName = null;
+                this.$scope.errorMessage = null;
+                this.$scope.onUserChange();
             };
         }
 
-        onGithubUserChanged = _.debounce(() => {
-            this.$scope.repositories = [];
-            this.$scope.selectedRepository = null;
-            this.$scope.selectedRepositoryName = null;
-            this.$scope.errorMessage = null;
-            this.updateScope();
-            this.$scope.$digest();
-        }, this.debounceConst);
-
-        updateScope() {
+        updateScope =  _.debounce(() => {
             // cancel previous request
             if (!!this.repositoriesLoadCanceller) {
                 this.repositoriesLoadCanceller.resolve();
@@ -95,7 +98,7 @@ module Sgcc.SearchPage {
                 this.$scope.selectedRepository = null;
                 this.$scope.errorMessage = null;
             }
-        }
+        }, this.debounceConst);
     }
 
     export function repositorySelectorDirective($timeout: ng.ITimeoutService, $q: ng.IQService) {
@@ -103,7 +106,9 @@ module Sgcc.SearchPage {
             restrict: 'AEC',
             scope: {
                 githubUser: '=',
-                selectedRepositoryName: '='
+                selectedRepositoryName: '=',
+                onUserChange: '&',
+                onSelectedRepositoryChange: '&'
             },
             templateUrl: '/app/searchPage/repositorySelector/repositorySelectorDirective.html',
             require: ['sgccRepositorySelector'],

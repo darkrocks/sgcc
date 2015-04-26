@@ -44,6 +44,7 @@
                     ng-options="pp for pp in possiblePerPage"
                     ng-model="perPage"
                     style="width: 70px;display: inline;"
+                    ng-change="onPerPageChanged()"
                     ></select>
         </div>
     </div>

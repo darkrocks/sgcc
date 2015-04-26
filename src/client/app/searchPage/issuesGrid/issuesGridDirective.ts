@@ -15,6 +15,7 @@ module Sgcc.SearchPage {
         currentPage: number;
         perPage: number
         possiblePerPage: number[];
+        onPerPageChanged: () => void;
         onPageClicked: (pageNumber: number) => void;
         onPreviousClicked: () => void;
         onNextClicked: () => void;
@@ -35,14 +36,14 @@ module Sgcc.SearchPage {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.onGithubUserChanged();
+                this.setIssuesDebounced();
             });
 
             this.$scope.$watch(() => this.$scope.selectedRepositoryName, (newVal, oldVal) => {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.onSelectedRepositoryNameChanged();
+                this.setIssuesDebounced();
             });
 
             this.$scope.$watch(() => this.$scope.currentPage, (newVal, oldVal) => {
@@ -56,7 +57,6 @@ module Sgcc.SearchPage {
                 if (newVal === oldVal) {
                     return;
                 }
-                this.$scope.currentPage = 1;
                 this.setIssues();
             });
 
@@ -75,20 +75,11 @@ module Sgcc.SearchPage {
                     this.$scope.currentPage++;
                 }
             };
+
+            this.$scope.onPerPageChanged = () => {
+                this.$scope.currentPage = 1;
+            };
         }
-
-        onGithubUserChanged = _.debounce(() => {
-            this.$scope.currentPage = 1;
-            this.$scope.selectedRepositoryName = null;
-            this.setIssues();
-            this.$scope.$digest();
-        }, this.debounceConst);
-
-        onSelectedRepositoryNameChanged = _.debounce(() => {
-            this.$scope.currentPage = 1;
-            this.setIssues();
-            this.$scope.$digest();
-        }, this.debounceConst);
 
         setIssuesDebounced = _.debounce(() => {
             this.setIssues();

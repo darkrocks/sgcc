@@ -37,6 +37,14 @@ module Sgcc.SearchPage {
             $scope.$on('$destroy', function() {
                 onRouteExternalUpdateUnbind();
             });
+
+            $scope.onUserChange = () => {
+                this.$scope.currentPage = 1;
+            };
+
+            $scope.onSelectedRepositoryChange = () => {
+                this.$scope.currentPage = 1;
+            };
         }
 
         urlStateToScope(urlState: UrlState) {
