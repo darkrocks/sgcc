@@ -4,7 +4,7 @@
 module Sgcc.Data {
     'use strict';
 
-    export var getIssuesResponseTransformer
+    export var issuesResponseTransformer
         = (dataString: string, headers: () => {}) => {
         var issues: any[] = JSON.parse(dataString);
 

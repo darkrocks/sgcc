@@ -19,6 +19,10 @@ module Sgcc.Data {
         issues: Issue[];
     }
 
+    export interface IGetIssueResponse extends IApiResponse{
+        issue: Issue;
+    }
+
     export class GithubDataService {
         static $inject = ['$http', '$q', 'sgccGithubApiUrl']
 
@@ -88,7 +92,7 @@ module Sgcc.Data {
                 + perPage;
 
             var options = {
-                transformResponse: getIssuesResponseTransformer
+                transformResponse: issuesResponseTransformer
             };
             if (!!canceller) {
                 (<any>options).timeout = canceller;
@@ -112,6 +116,48 @@ module Sgcc.Data {
                         currentPage: null,
                         perPage: null,
                         issues: null,
+                        errorMessage: errorMessage
+                    });
+                });
+        }
+
+        getIssue(
+            userName: string,
+            repository: string,
+            number: number,
+            canceller: ng.IPromise<any> = null): ng.IPromise<IGetIssueResponse> {
+            if (!userName || !repository || !number) {
+                throw new Error('Parameter not specified');
+            }
+
+            var url = this.githubApiUrl
+                + '/repos/'
+                + userName
+                + '/'
+                + repository
+                + '/issues/' +
+                number;
+
+            var options = {
+                transformResponse: issueResponseTransformer
+            };
+            if (!!canceller) {
+                (<any>options).timeout = canceller;
+            }
+
+            return this.$http.get(url, options)
+                .then((arg: ng.IHttpPromiseCallbackArg<IGetIssueResponse>) => {
+                    return arg.data;
+                })
+                .catch((data) => {
+                    var errorMessage;
+                    if (data.data) {
+                        errorMessage = data.data.message;
+                    } else {
+                        errorMessage = 'Unknown error';
+                    }
+                    return this.$q.reject({
+                        issue: null,
                         errorMessage: errorMessage
                     });
                 });

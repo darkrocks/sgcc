@@ -1,1 +1,28 @@
-issue details
+<div class="row">
+    <div class="col-md-12">
+        <h1>Issue #{{issue.number}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{issue.title}}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span class="label label-success">{{issue.status}}</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="media">
+            <div class="media-left">
+                <img class="media-object" style="width: 100px;" ng-src="{{issue.user.avatar_url}}">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{issue.user.login}} opened issue on {{issue.created_at}}</h4>
+                {{issue.body}}
+            </div>
+        </div>
+    </div>
+</div>
