@@ -5,7 +5,7 @@ module Sgcc {
     'use strict';
 
     export var routes = {
-      issues: {
+      searchPage: {
           templateUrl: '/app/searchPage/searchPage.html',
           controller: 'sgccSearchPageController'
       }
@@ -18,7 +18,7 @@ module Sgcc {
             requireBase: false
         });
 
-        $routeProvider.otherwise(routes.issues);
+        $routeProvider.otherwise(routes.searchPage);
     };
     routingConfig.$inject = ['$httpProvider', '$routeProvider', '$locationProvider'];
 }
