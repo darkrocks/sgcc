@@ -12,6 +12,10 @@ module Sgcc.Data {
         repositories: Repository[];
     }
 
+    export interface IGetIssuesResponse extends IApiResponse{
+        issues: Issue[];
+    }
+
     export class GithubDataService {
         static $inject = ['$http', '$q', 'sgccGithubApiUrl']
 
@@ -19,6 +23,10 @@ module Sgcc.Data {
         }
 
         getRepositiries(userName: string, canceller?: ng.IPromise<any>): ng.IPromise<IGetRepositiriesResponse> {
+            if (!userName) {
+                throw new Error('Parameter not specified');
+            }
+
             var url = this.githubApiUrl + '/users/' + userName + '/repos';
             var options;
             if (!!canceller) {
@@ -41,7 +49,11 @@ module Sgcc.Data {
                             errorMessage = 'User "' + userName + '" not found';
                             break;
                         default:
-                            errorMessage = data.data.message;
+                            if (data.data) {
+                                errorMessage = data.data.message;
+                            } else {
+                                errorMessage = 'Unknown error';
+                            }
                             break;
                     }
                     return this.$q.reject({
@@ -50,5 +62,40 @@ module Sgcc.Data {
                     });
                 });
         }
+
+        getIssues(userName: string, repository: string, canceller?: ng.IPromise<any>): ng.IPromise<IGetIssuesResponse> {
+            if (!userName || !repository) {
+                throw new Error('Parameter not specified');
+            }
+
+            var url = this.githubApiUrl + '/repos/' + userName + '/' + repository + '/issues?sort=created';
+            var options = {
+                transformResponse: getIssuesResponseTransformer
+            };
+            if (!!canceller) {
+                (<any>options).timeout = canceller;
+            }
+
+            return this.$http.get(url, options)
+                .then((arg: ng.IHttpPromiseCallbackArg<Issue[]>) => {
+                    return {
+                        issues: arg.data,
+                        errorMessage: null
+                    };
+                })
+                .catch((data) => {
+                    var errorMessage;
+                    if (data.data) {
+                        errorMessage = data.data.message;
+                    } else {
+                        errorMessage = 'Unknown error';
+                    }
+                    return this.$q.reject({
+                        issues: null,
+                        errorMessage: errorMessage
+                    });
+                });
+        }
+
     }
 }

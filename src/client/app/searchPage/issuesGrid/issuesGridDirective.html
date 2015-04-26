@@ -1,0 +1,22 @@
+<table class="table" ng-hide="issues === null || issues.length === 0">
+    <caption><h4>Issues</h4></caption>
+    <thead>
+    <tr>
+        <th>Number</th>
+        <th>Title</th>
+        <th>State</th>
+        <th>User</th>
+        <th>Created At</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="issue in issues">
+        <td>{{issue.number}}</td>
+        <td>{{issue.title}}</td>
+        <td>{{issue.state}}</td>
+        <td>{{issue.user.login}}</td>
+        <td>{{issue.created_at.toDateString()}}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="alert alert-info" role="" ng-show="issues.length === 0">No issues found</div>

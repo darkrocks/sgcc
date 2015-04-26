@@ -7,5 +7,7 @@ module Sgcc.SearchPage {
     angular.module('sgcc.searchPage', ['sgcc.data'])
         .controller('sgccRepositorySelectorController', RepositorySelectorController)
         .directive('sgccRepositorySelector', repositorySelectorDirective)
+        .controller('sgccIssuesGridController', IssuesGridController)
+        .directive('sgccIssuesGrid', issuesGridDirective)
         .controller('sgccSearchPageController', SearchPageController);
 }

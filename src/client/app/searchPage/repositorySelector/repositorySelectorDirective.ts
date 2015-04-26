@@ -14,7 +14,6 @@ module Sgcc.SearchPage {
 
     export class RepositorySelectorController {
         static $inject = ['$scope', '$q', 'sgccGithubDataService'];
-        private selectRepositoryOption: Data.Repository = new Data.Repository(-1, '- Select a Repository -');
         private repositoriesLoadCanceller: ng.IDeferred<any> = this.$q.defer();
 
         constructor(private $scope: IRepositorySelectorDirectiveScope,
@@ -22,7 +21,7 @@ module Sgcc.SearchPage {
                     private githubDataService: Data.GithubDataService) {
 
             if (!this.$scope.selectedRepositoryName) {
-                this.$scope.selectedRepositoryName = this.selectRepositoryOption.name;
+                this.$scope.selectedRepositoryName = selectRepositoryOption.name;
             }
             this.updateScope();
             this.$scope.$watch(() => this.$scope.githubUser, () => {
@@ -38,25 +37,25 @@ module Sgcc.SearchPage {
         }
 
         setRepositoriesDebounced = _.debounce(() => {
-            this.$scope.selectedRepositoryName = this.selectRepositoryOption.name;
+            this.$scope.selectedRepositoryName = selectRepositoryOption.name;
             this.updateScope();
             this.$scope.$digest();
         }, 1000);
 
         updateScope() {
-            if (!!this.$scope.githubUser) {
-                // cancel previous not finished request
-                if (!!this.repositoriesLoadCanceller) {
-                    this.repositoriesLoadCanceller.resolve();
-                }
-                this.repositoriesLoadCanceller = this.$q.defer();
+            // cancel previous request
+            if (!!this.repositoriesLoadCanceller) {
+                this.repositoriesLoadCanceller.resolve();
+            }
+            this.repositoriesLoadCanceller = this.$q.defer();
 
+            if (!!this.$scope.githubUser) {
                 this.githubDataService.getRepositiries(
                     this.$scope.githubUser,
                     this.repositoriesLoadCanceller.promise)
                     .then((response: Data.IGetRepositiriesResponse) => {
                         this.$scope.repositories = response.repositories;
-                        this.$scope.repositories.splice(0, 0, this.selectRepositoryOption);
+                        this.$scope.repositories.splice(0, 0, selectRepositoryOption);
 
                         this.$scope.selectedRepository = _.find(this.$scope.repositories, (repo: Data.Repository) => {
                             return repo.name = this.$scope.selectedRepositoryName;
@@ -81,7 +80,7 @@ module Sgcc.SearchPage {
             restrict: 'AEC',
             scope: {
                 githubUser: '=',
-                selectedRepositoryId: '='
+                selectedRepositoryName: '='
             },
             templateUrl: '/app/searchPage/repositorySelector/repositorySelectorDirective.html',
             require: ['sgccRepositorySelector'],

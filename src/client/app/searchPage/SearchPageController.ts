@@ -4,6 +4,8 @@
 module Sgcc.SearchPage {
     'use strict';
 
+    export var selectRepositoryOption: Data.Repository = new Data.Repository(-1, '- Select a Repository -');
+
     export class SearchPageController {
         static $inject = ['$scope'];
 
