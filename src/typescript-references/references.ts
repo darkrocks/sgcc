@@ -3,12 +3,12 @@
 /// <reference path="../client/app/data/GithubDataService.ts" />
 /// <reference path="../client/app/data/data.ts" />
 /// <reference path="../client/app/data/models/Repository.ts" />
-/// <reference path="../client/app/issues/IssuesController.ts" />
-/// <reference path="../client/app/issues/issues.ts" />
-/// <reference path="../client/app/issues/repositorySelector/repositorySelectorDirective.ts" />
 /// <reference path="../client/app/navbar/navbar.ts" />
 /// <reference path="../client/app/navbar/navbarDirective.ts" />
 /// <reference path="../client/app/routing.ts" />
+/// <reference path="../client/app/searchPage/SearchPageController.ts" />
+/// <reference path="../client/app/searchPage/repositorySelector/repositorySelectorDirective.ts" />
+/// <reference path="../client/app/searchPage/searchPage.ts" />
 /// <reference path="../server/routes.ts" />
 /// <reference path="../server/server.ts" />
 //grunt-end

@@ -1,7 +1,7 @@
 /**
  * Created by user on 25.04.2015.
  */
-module Sgcc.Issues {
+module Sgcc.SearchPage {
     'use strict';
 
     export interface IRepositorySelectorDirectiveScope extends ng.IScope{
@@ -83,7 +83,7 @@ module Sgcc.Issues {
                 githubUser: '=',
                 selectedRepositoryId: '='
             },
-            templateUrl: '/app/issues/repositorySelector/repositorySelectorDirective.html',
+            templateUrl: '/app/searchPage/repositorySelector/repositorySelectorDirective.html',
             require: ['sgccRepositorySelector'],
             link: (scope: IRepositorySelectorDirectiveScope, element: ng.IAugmentedJQuery, attrs, ctrlArr) => {
             },

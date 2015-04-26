@@ -6,8 +6,8 @@ module Sgcc {
 
     export var routes = {
       issues: {
-          templateUrl: '/app/issues/issues.html',
-          controller: 'sgccIssuesController'
+          templateUrl: '/app/searchPage/searchPage.html',
+          controller: 'sgccSearchPageController'
       }
     };
 
