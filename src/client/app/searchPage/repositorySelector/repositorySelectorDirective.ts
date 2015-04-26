@@ -16,7 +16,7 @@ module Sgcc.SearchPage {
     export class RepositorySelectorController {
         static $inject = ['$scope', '$q', 'sgccGithubDataService'];
         private repositoriesLoadCanceller: ng.IDeferred<any> = this.$q.defer();
-        private debounceConst: number = 500;
+        private debounceConst: number = 1000;
 
         constructor(private $scope: IRepositorySelectorDirectiveScope,
                     private $q: ng.IQService,
