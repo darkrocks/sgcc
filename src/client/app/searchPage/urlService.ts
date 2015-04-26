@@ -33,7 +33,7 @@ module Sgcc.SearchPage {
 
         onRouteExternalUpdate(callback: (urlState: UrlState) => void) {
             // calls callback method only when route was changed by clicking on back/forward buttons in the browser or clicking on a link
-            this.$rootScope.$on('$routeUpdate', () => {
+            return this.$rootScope.$on('$routeUpdate', () => {
                 if (!this.isCurrentUrlInternallySet()) {
                     callback(this.getState());
                     this.updateLastSetUrl();

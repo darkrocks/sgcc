@@ -14,7 +14,7 @@ module Sgcc.SearchPage {
         constructor(private $scope: any, private urlService: UrlService) {
             this.urlStateToScope(this.urlService.getState());
 
-            urlService.onRouteExternalUpdate((urlState: UrlState) => {
+            var onRouteExternalUpdateUnbind = urlService.onRouteExternalUpdate((urlState: UrlState) => {
                 this.urlStateToScope(urlState);
             });
 
@@ -32,6 +32,10 @@ module Sgcc.SearchPage {
 
             $scope.$watch(() => this.$scope.perPage, () => {
                 this.updateUrl();
+            });
+
+            $scope.$on('$destroy', function() {
+                onRouteExternalUpdateUnbind();
             });
         }
 
