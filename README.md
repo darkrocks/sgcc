@@ -5,7 +5,7 @@ Run the Application.
 Prerequisites: you must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
 I have preconfigured the project with a simple development web server. The simplest way to start this server is:
 
-npm start.
+npm start
 
 Now browse to the app at http://localhost:8080/.
 
