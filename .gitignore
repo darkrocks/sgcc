@@ -10,4 +10,4 @@ src/client/**/*.js
 src/client/styles/**/*.css
 src/server/**/*.js
 src/typescript-references/**/*.js
-!/src/client/bower_components/**/*.js
+!/src/client/lib/**/*.js
