@@ -17,6 +17,7 @@ module Sgcc.IssueDetailsPage {
             private $routeParams: IIssueDetailsPageRouteParams,
             private githubDataService: Data.GithubDataService) {
 
+            this.$scope.routeParams = $routeParams;
             this.githubDataService
                 .getIssue($routeParams.githubUser, $routeParams.repo, $routeParams.number)
                 .then((response: Data.IGetIssueResponse) => {

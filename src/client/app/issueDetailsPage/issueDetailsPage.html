@@ -6,12 +6,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h2>{{issue.title}}</h2>
+            <a ng-href="#?u={{routeParams.githubUser}}&r={{routeParams.repo}}&p=1&pp=10">All {{routeParams.githubUser}}/{{routeParams.repo}} issues</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <span class="label label-success">{{issue.status}}</span>
+            <h2>{{issue.title}}<span class="label label-success" style="  margin-left: 16px;font-size: 13px;vertical-align: middle;">{{issue.state}}</span></h2>
         </div>
     </div>
     <div class="row">
