@@ -28,6 +28,7 @@ module Sgcc.SearchPage {
             this.$scope.$watch(() => this.$scope.githubUser, () => {
                 this.$scope.repositories = [];
                 this.$scope.selectedRepository = null;
+                this.$scope.selectedRepositoryName = null;
                 this.$scope.errorMessage = null;
                 this.setRepositoriesDebounced();
             });
