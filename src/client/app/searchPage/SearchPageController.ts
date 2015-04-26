@@ -5,7 +5,7 @@ module Sgcc.SearchPage {
     'use strict';
 
     export var selectRepositoryOption: Data.Repository = new Data.Repository(-1, '- Select a Repository -');
-    export var defaultPerPage = 20;
+    export var defaultPerPage = 10;
 
     export class SearchPageController {
         static $inject = ['$scope', 'sgccUrlService'];
