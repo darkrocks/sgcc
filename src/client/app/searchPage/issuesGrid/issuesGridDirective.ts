@@ -33,7 +33,7 @@ module Sgcc.SearchPage {
             this.$scope.$watch(() => this.$scope.githubUser, () => {
                 this.$scope.currentPage = 1;
                 this.$scope.selectedRepositoryName = null;
-                this.setIssues();
+                this.setIssuesDebounced();
             });
 
             this.$scope.$watch(() => this.$scope.selectedRepositoryName, () => {

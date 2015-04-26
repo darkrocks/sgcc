@@ -13,7 +13,9 @@
         <label>Repository</label>
         <select class="form-control"
                 ng-options="repository.name for repository in repositories"
-                ng-model="selectedRepository"></select>
+                ng-model="selectedRepository"
+                ng-change="onSelectedRepositoryChange(repository)"
+                ></select>
     </div>
 
     <div class="form-group" ng-show="errorMessage">

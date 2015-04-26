@@ -8,6 +8,7 @@ module Sgcc.SearchPage {
         githubUser: string;
         selectedRepositoryName: string;
         selectedRepository: Data.Repository;
+        onSelectedRepositoryChange: (repository: Data.Repository) => void;
         repositories: Data.Repository [];
         errorMessage: string;
     }
@@ -33,13 +34,14 @@ module Sgcc.SearchPage {
                 this.setRepositoriesDebounced();
             });
 
-            this.$scope.$watch(() => this.$scope.selectedRepository, () => {
+            this.$scope.onSelectedRepositoryChange = (repository: Data.Repository) => {
                 if (!!this.$scope.selectedRepository) {
                     this.$scope.selectedRepositoryName = this.$scope.selectedRepository.name;
                 } else {
                     this.$scope.selectedRepositoryName = null;
                 }
-            });
+            };
+
         }
 
         setRepositoriesDebounced = _.debounce(() => {
