@@ -13,6 +13,9 @@ module Sgcc.Data {
     }
 
     export interface IGetIssuesResponse extends IApiResponse{
+        pageCount: number;
+        currentPage: number;
+        perPage: number;
         issues: Issue[];
     }
 
@@ -63,12 +66,27 @@ module Sgcc.Data {
                 });
         }
 
-        getIssues(userName: string, repository: string, canceller?: ng.IPromise<any>): ng.IPromise<IGetIssuesResponse> {
+        getIssues(
+            userName: string,
+            repository: string,
+            page: number = 1,
+            perPage: number = 10,
+            canceller: ng.IPromise<any> = null
+            ): ng.IPromise<IGetIssuesResponse> {
             if (!userName || !repository) {
                 throw new Error('Parameter not specified');
             }
 
-            var url = this.githubApiUrl + '/repos/' + userName + '/' + repository + '/issues?sort=created';
+            var url = this.githubApiUrl
+                + '/repos/'
+                + userName
+                + '/'
+                + repository
+                + '/issues?sort=created&page='
+                + page
+                + '&per_page='
+                + perPage;
+
             var options = {
                 transformResponse: getIssuesResponseTransformer
             };
@@ -77,11 +95,10 @@ module Sgcc.Data {
             }
 
             return this.$http.get(url, options)
-                .then((arg: ng.IHttpPromiseCallbackArg<Issue[]>) => {
-                    return {
-                        issues: arg.data,
-                        errorMessage: null
-                    };
+                .then((arg: ng.IHttpPromiseCallbackArg<IGetIssuesResponse>) => {
+                    arg.data.currentPage = page;
+                    arg.data.perPage = perPage;
+                    return arg.data;
                 })
                 .catch((data) => {
                     var errorMessage;
@@ -91,6 +108,9 @@ module Sgcc.Data {
                         errorMessage = 'Unknown error';
                     }
                     return this.$q.reject({
+                        pageCount: null,
+                        currentPage: null,
+                        perPage: null,
                         issues: null,
                         errorMessage: errorMessage
                     });

@@ -11,7 +11,13 @@ module Sgcc.SearchPage {
         githubUser: string;
         selectedRepositoryName: string;
         issues: Data.Issue[];
-    }
+        pages: number[];
+        currentPage: number;
+        perPage: number
+        onPageClicked: (pageNumber: number) => void;
+        onPreviousClicked: () => void;
+        onNextClicked: () => void;
+}
 
     export class IssuesGridController {
         static $inject = ['$scope', '$q', 'sgccGithubDataService'];
@@ -20,15 +26,50 @@ module Sgcc.SearchPage {
         constructor(private $scope: IIssuesGridDirectiveScope,
                     private $q: ng.IQService,
                     private githubDataService: Data.GithubDataService) {
+            this.$scope.perPage = 20;
+            this.$scope.currentPage = 1;
+
+
             this.$scope.$watch(() => this.$scope.githubUser, () => {
+                this.$scope.currentPage = 1;
                 this.setIssues();
             });
 
             this.$scope.$watch(() => this.$scope.selectedRepositoryName, () => {
+                this.$scope.currentPage = 1;
                 this.setIssues();
             });
 
+            this.$scope.$watch(() => this.$scope.currentPage, () => {
+                this.setIssuesDebounced();
+            });
+
+            this.$scope.$watch(() => this.$scope.perPage, () => {
+                this.$scope.currentPage = 1;
+                this.setIssuesDebounced();
+            });
+
+            this.$scope.onPageClicked = (pageNumber: number) => {
+                this.$scope.currentPage = pageNumber;
+            };
+
+            this.$scope.onPreviousClicked = () => {
+                if (this.$scope.currentPage > 0) {
+                    this.$scope.currentPage--;
+                }
+            };
+
+            this.$scope.onNextClicked = () => {
+                if (this.$scope.currentPage < this.$scope.pages.length) {
+                    this.$scope.currentPage++;
+                }
+            };
         }
+
+        setIssuesDebounced = _.debounce(() => {
+            this.setIssues();
+            this.$scope.$digest();
+        }, 500);
 
         setIssues() {
             // cancel previous request
@@ -43,8 +84,16 @@ module Sgcc.SearchPage {
                 this.githubDataService.getIssues(
                     this.$scope.githubUser,
                     this.$scope.selectedRepositoryName,
+                    this.$scope.currentPage,
+                    this.$scope.perPage,
                     this.issuesLoadCanceller.promise)
                     .then((response: Data.IGetIssuesResponse) => {
+
+                        this.$scope.pages = [];
+                        for (var i = 1; i <= response.pageCount; i++) {
+                            this.$scope.pages.push(i);
+                        }
+
                         this.$scope.issues = response.issues;
                     })
                     .catch((response: Data.IGetIssuesResponse) => {

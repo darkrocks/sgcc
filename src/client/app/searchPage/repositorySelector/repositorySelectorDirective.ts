@@ -24,9 +24,14 @@ module Sgcc.SearchPage {
                 this.$scope.selectedRepositoryName = selectRepositoryOption.name;
             }
             this.updateScope();
+
             this.$scope.$watch(() => this.$scope.githubUser, () => {
+                this.$scope.repositories = [];
+                this.$scope.selectedRepository = null;
+                this.$scope.errorMessage = null;
                 this.setRepositoriesDebounced();
             });
+
             this.$scope.$watch(() => this.$scope.selectedRepository, () => {
                 if (!!this.$scope.selectedRepository) {
                     this.$scope.selectedRepositoryName = this.$scope.selectedRepository.name;
@@ -37,7 +42,6 @@ module Sgcc.SearchPage {
         }
 
         setRepositoriesDebounced = _.debounce(() => {
-            this.$scope.selectedRepositoryName = selectRepositoryOption.name;
             this.updateScope();
             this.$scope.$digest();
         }, 1000);
@@ -58,8 +62,12 @@ module Sgcc.SearchPage {
                         this.$scope.repositories.splice(0, 0, selectRepositoryOption);
 
                         this.$scope.selectedRepository = _.find(this.$scope.repositories, (repo: Data.Repository) => {
-                            return repo.name = this.$scope.selectedRepositoryName;
+                            return (repo.name === this.$scope.selectedRepositoryName);
                         });
+
+                        if (!this.$scope.selectedRepository) {
+                            this.$scope.selectedRepository = selectRepositoryOption;
+                        }
                         this.$scope.errorMessage = null;
                     })
                     .catch((data: Data.IGetRepositiriesResponse) => {

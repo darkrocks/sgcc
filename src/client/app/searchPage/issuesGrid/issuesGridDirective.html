@@ -1,22 +1,48 @@
-<table class="table" ng-hide="issues === null || issues.length === 0">
-    <caption><h4>Issues</h4></caption>
-    <thead>
-    <tr>
-        <th>Number</th>
-        <th>Title</th>
-        <th>State</th>
-        <th>User</th>
-        <th>Created At</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="issue in issues">
-        <td>{{issue.number}}</td>
-        <td>{{issue.title}}</td>
-        <td>{{issue.state}}</td>
-        <td>{{issue.user.login}}</td>
-        <td>{{issue.created_at.toDateString()}}</td>
-    </tr>
-    </tbody>
-</table>
+<div ng-hide="issues === null || issues.length === 0">
+    <table class="table">
+        <caption><label>Issues</label></caption>
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>State</th>
+            <th>User</th>
+            <th>Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="issue in issues">
+            <td>{{issue.number}}</td>
+            <td>{{issue.title}}</td>
+            <td>{{issue.state}}</td>
+            <td>{{issue.user.login}}</td>
+            <td>{{issue.created_at.toDateString()}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-md-10">
+            <nav >
+                <ul class="pagination">
+                    <li ng-hide="currentPage === 1">
+                        <a ng-click="onPreviousClicked()" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="pageNumber in pages" ng-class="(pageNumber === currentPage) ? 'active': ''"><a ng-click="onPageClicked(pageNumber)">{{pageNumber}}</a></li>
+                    <li ng-hide="currentPage === pages.length">
+                        <a ng-click="onNextClicked()" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-2" style="margin-top: 16px;">
+            Issues per page:
+            <input class="form-control" style="  width: 48px; display: inline;" type="text" ng-model="perPage">
+        </div>
+    </div>
+
+</div>
 <div class="alert alert-info" role="" ng-show="issues.length === 0">No issues found</div>
