@@ -1,5 +1,5 @@
 # sgcc
-SwiftGift Code Challenge
+Description: simple angularjs app implements search of github repositories
 
 Run the Application.
 Prerequisites: you must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
